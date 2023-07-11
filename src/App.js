@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
+import { TableWithBrowserPagination, Column } from 'react-rainbow-components';
 
 function Search(){
   const [keyword, setKeyword] = useState('');
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const getData = async () => {
@@ -24,70 +24,35 @@ function Search(){
     else {
       setData([])
     }
-  }, [keyword, currentPage]);
+  }, [keyword]);
 
   const keywordChange = (event) => {
     setKeyword(event.target.value);
   };
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((previousPage) => previousPage - 1);
-    }
-  };
-
-  const nextPage = () => {
-    setCurrentPage((previousPage) => previousPage + 1);
-
-  };
-
   return (
-    <div className="container">
-      <div className="search-container"> 
+    <div> 
+      <div className="search-container">
+        <label classname="search-label" for="search-container">Enter a keyword (data loads in 5-10s): </label> 
         <input
           type="text"
           value={keyword}
           onChange={keywordChange}
-          placeholder="Enter keyword"
+          placeholder="keyword"
         />
-
-        <div className="table-container"> 
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Phase</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {Array.isArray(data) && data.length > 0 ? (
-                data.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.id}</td>
-                    <td>{item.date}</td>
-                    <td>{item.phase}</td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="3">No data found</td>
-                </tr>
-              )}
-            </tbody>
-
-          </table>
-        </div>
       </div>
 
-      <div className="buttons">
-        <button onClick={prevPage} disabled={currentPage === 1}>
-          Previous Page
-        </button>
-        <button onClick={nextPage}>Next Page</button>
-      </div>
-    </div>
+      <TableWithBrowserPagination classname="table"
+        keyField="id"
+        data={data}
+        variant="listView"
+        pageSize={20}>
+        <Column header="ID" field="id" />
+        <Column header="Date" field="date" />
+        <Column header="Phase" field="phase" />
+          
+      </TableWithBrowserPagination>
+    </div> 
   );
     
 }
