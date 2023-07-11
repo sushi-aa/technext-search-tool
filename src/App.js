@@ -10,7 +10,8 @@ function Search(){
     
     const getData = async (keyword) => {
       try {
-        const resp = await fetch('/.netlify/functions/search?query=' + keyword);
+        //const resp = await fetch('/.netlify/functions/search?query=' + keyword);
+        const resp = await fetch('https://testtechnext1-pearl118.b4a.run/search/api/query/?query=' + keyword);
         if (!resp.ok) {
           throw new Error('API request failed: ' + resp.status);
         }
