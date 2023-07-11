@@ -7,19 +7,19 @@ function Search(){
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    const getData = async () => {
-      try{
-        const resp = await fetch('https://testtechnext1-pearl118.b4a.run/search/api/query/?query='+keyword);
+    
+    const getData = async (keyword) => {
+      try {
+        const resp = await fetch('/.netlify/functions/search?query=' + keyword);
         const jsonResp = await resp.json();
-        //console.log(jsonResp);
         setData(jsonResp);
       } catch (error) {
-        console.error("Couldn't fetch data:", error)
+        console.error("Couldn't fetch data:", error);
       }
     };
 
     if (keyword) { 
-      getData();
+      getData(keyword);
     }
     else {
       setData([])
