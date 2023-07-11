@@ -11,6 +11,9 @@ function Search(){
     const getData = async (keyword) => {
       try {
         const resp = await fetch('/.netlify/functions/search?query=' + keyword);
+        if (!resp.ok) {
+          throw new Error('API request failed: ' + resp.status);
+        }
         const jsonResp = await resp.json();
         setData(jsonResp);
       } catch (error) {

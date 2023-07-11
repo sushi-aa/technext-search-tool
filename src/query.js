@@ -4,6 +4,7 @@ exports.handler = async (event, context) => {
   try {
     const keyword = event.queryStringParameters.query;
     const resp = await fetch('https://testtechnext1-pearl118.b4a.run/search/api/query/?query=' + keyword);
+    console.log(await resp.text());
     const jsonResp = await resp.json();
     console.log(jsonResp);
     return {
